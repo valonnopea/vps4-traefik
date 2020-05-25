@@ -1,0 +1,60 @@
+---
+## /* vim: set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent: */
+
+################################################################
+# Global configuration
+checkNewVersion: true
+sendAnonymousUsage: true
+
+################################################################
+# Entrypoints configuration
+entryPoints:
+  web:
+    address: ":80"
+
+  websecure:
+    address: ":443"
+    http:
+      tls:
+        certResolver:
+          "letsencrypt"
+
+################################################################
+# Traefik logs configuration
+log:
+  level: "ERROR"
+
+################################################################
+# Access logs configuration
+# accessLog: {}
+
+################################################################
+# API and dashboard configuration
+api:
+  insecure: false
+  dashboard: true
+
+################################################################
+# Certificate resolving
+certificatesResolvers:
+  letsencrypt:
+    # Enable ACME (Let's Encrypt): automatic SSL.
+    acme:
+      tlschallenge: true
+      email: "root+vps4@valonnopea.net"
+      storage: "/letsencrypt/acme.json"
+
+################################################################
+# Middlewares
+http:
+  middlewares: {}
+
+################################################################
+# Configuration backends
+providers:
+  docker:
+    exposedByDefault: false
+
+  file:
+    directory: "/etc/traefik/configs"
+    watch: true

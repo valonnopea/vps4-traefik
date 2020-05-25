@@ -1,0 +1,28 @@
+---
+## /* vim: set tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab autoindent: */
+
+http:
+  routers:
+    api:
+      rule: "Host(`vps4.valonnopea.net`)"
+      service: "api@internal"
+      entryPoints:
+      - "web"
+      middlewares:
+      - "http-to-https"
+    api-secure:
+      rule: "Host(`vps4.valonnopea.net`)"
+      service: "api@internal"
+      entryPoints:
+      - "websecure"
+      middlewares:
+      - "auth"
+  middlewares:
+    auth:
+      basicAuth:
+        users:
+        - "mireiawen:$2y$10$3yNlPgkCgdiQN1HhaaLlu.Txhwmdup8VCgSRNAqljDOlI8W.cXaRi"
+    http-to-https:
+      redirectScheme:
+        scheme: "https"
+        permanent: true
